@@ -21,6 +21,10 @@
  *
  */
 
+/**
+ * BindableCollection allows you to bind your code to some
+ * events in a collection.
+ */
 abstract class BindableCollection extends Collection {
 
 	protected static function create() {
