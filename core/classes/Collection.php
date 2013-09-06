@@ -26,11 +26,11 @@
  */
 abstract class Collection {
 
-	protected 
+	public 
 		$_objectId		= null,
 		$collection 	= null;
 
-	protected static function _collection() {
+	public static function _collection() {
 		global $db;
 		$name = strtolower( get_called_class() );
 		return $db->{$name};
@@ -40,21 +40,23 @@ abstract class Collection {
 		$this->collection = static::_collection();
 		if ( !$id ) {
 			try {
-				$ret = $this->collection->insert([]);
-				$this->_objectId = $ret['_id'];
-			} catch ( Exception $e ) {
+				$obj = ['_created'	=>	time()];
+				$ret = $this->collection->insert($obj);
+				$this->_objectId = $obj['_id'];
+				$id = $this->_objectId;
+			} catch ( MongoException $e ) {
 				die("Error creating object in the {$this->collection} collection.\n
-						Error message: {$e->message}\n");
+						Error message: {$e}\n");
 			}
 		}
 		if ( !static::hasId($id) ) {
 			die ("There is no object with id {$id} in the {$this->collection} collection.\n");
 		}
-		$this->id = new MongoId($id);
+		$this->_objectId = new MongoId($id);
 	}
 
 	public static function hasId( $objectId ) {
-		return (bool) static::_collection()->findOne(['_id', $objectId], '_id');
+		return (bool) static::_collection()->findOne(['_id' => new MongoId($objectId)]);
 	}
 
 	public static function count( $query = [], $limit = 0, $skip = 0 ) {
@@ -107,9 +109,16 @@ abstract class Collection {
 	}
 
 	public function __set( $_name, $_value ) {
-		return $this->collection->update(
+		$this->collection->update(
 			['_id' 	=> $this->_objectId],
-			[$_name	=> $_value]
+			[
+				'$set' => [
+					$_name	=> $_value
+				]
+			],
+			[
+				'upsert'	=>	false
+			]
 		);
 	}
 
@@ -120,6 +129,18 @@ abstract class Collection {
 		return $this->collection->remove(
 			['_id' 	=> $this->_objectId]
 		);
+	}
+
+	public static function object( $arrayOrID ) {
+		if ( is_array($arrayOrID) ) {
+			if ( !isset($arrayOrID["_id"]) ) {
+				throw new Exception;
+			}
+			$id = (string) $arrayOrID["_id"];
+		} else {
+			$id = (string) $arrayOrID;
+		}
+		return new static($id);
 	}
 
 }
