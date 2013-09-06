@@ -20,14 +20,3 @@
  * limitations under the License.
  *
  */
-
-$conf['memcached'] = [
-
-	'servers'   => [
-		[
-			'host'	=>	'127.0.0.1',
-			'port'	=>	11211 
-		]
-	]
-
-];

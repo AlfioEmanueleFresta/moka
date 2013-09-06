@@ -21,13 +21,9 @@
  *
  */
 
-$conf['memcached'] = [
+?>
 
-	'servers'   => [
-		[
-			'host'	=>	'127.0.0.1',
-			'port'	=>	11211 
-		]
-	]
+<!-- Replace this with your custom home page -->
 
-];
+<h2>This is the home page</h2>
+<p>Welcome and stuff.</p>

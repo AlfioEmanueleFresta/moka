@@ -22,6 +22,13 @@
  */
 
 /*
+ * Hello, we are Moka's global objects!
+ */
+$db 	= null;
+$cache 	= false;
+$conf 	= [];
+
+/*
  * Load every file in the directories in $_load, please!
  */
 $_load = ['configuration', 'libraries'];
@@ -33,5 +40,64 @@ foreach ( $_load as $_directory ) {
 		$_file = $_dir . $_file;
 		if ( is_dir($_file) ) { continue; }
 		require $_file;
+	}
+}
+
+/*
+ * Set the class autoloader for the files...
+ */
+spl_autoload_register(function ($class) {
+	if ( is_readable( 'core/classes/' . $class . '.php') ) {
+		require 'core/classes/' . $class . '.php';
+	} else {
+		return false;
+	}
+});
+
+/*
+ * We assume any other class you name is a collection
+ */
+spl_autoload_register(function ($class) {
+	eval("class {$class} extends Collection {}");
+});
+
+/*
+ * Needed configuration, are you here?
+ */
+$whatsNeeded = ['database', 'emails'];
+foreach ( $whatsNeeded as $needed ) {
+	if ( !isset($conf[$needed]) ) {
+		die("The {$needed} configuration is missing, sorry.\n");
+	}
+}
+
+/*
+ * You, Moka, go connect to the database! 
+ */
+try {
+	$db = new MongoClient(
+		$conf['database']['connection'],
+		$conf['database']['options']
+	);
+	$db = $db->selectDB($conf['database']['database']);
+} catch ( Exception $e ) {
+	die("An error has occured while trying to connect to the Mongo database.\nError: {$e->message}\n");
+}
+
+/*
+ * Connects to the cache server, if needed
+ */
+if ( isset($conf['memcached']) ) {
+	try {
+		$cache = new Memcached();
+		// Add the configured servers...
+		foreach ( $conf['memcached']['servers'] as $_cacheServer ) {
+			$cache->addServer(
+				$_cacheServer['host'],
+				$_cacheServer['port']
+			);
+		}
+	} catch ( Exception $e ) {
+		die("Error connecting to the cache server: {$e->message}\n");
 	}
 }

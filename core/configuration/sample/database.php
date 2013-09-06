@@ -23,8 +23,10 @@
 
 $conf['database'] = [
 	
-	'dsn'		=>	'mysql:host=DATABASE_HOST;dbname=DATABASE_NAME',
-	'username'	=>	'DATABASE_USERNAME',
-	'password'	=>	'DATABASE_PASSWORD'
+	'connection'	=>	'mongodb://localhost:27017',
+	'database'		=>	'test',
+	'options'		=>	[
+		'connect'	=>	true
+	]
 
 ];

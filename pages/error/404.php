@@ -21,13 +21,9 @@
  *
  */
 
-$conf['memcached'] = [
+?>
 
-	'servers'   => [
-		[
-			'host'	=>	'127.0.0.1',
-			'port'	=>	11211 
-		]
-	]
+<!-- Replace this with your custom 404 error -->
 
-];
+<h2>Page not found</h2>
+<p>Check the spelling and the stuff.</p>
