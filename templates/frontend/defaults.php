@@ -22,38 +22,11 @@
  */
 
 /**
- * A simple class to manage user sessions on the database
- * Uses the User class to store user data 
+ * DEFAULT TEMPLATE SOBSTITUTIONS
  */
-class Session extends BindableCollection {
 
-	public function onPostCreate() {
-		$expire = (new DateTime)->modify("+24 hour");
-		$this->expire = $expire->getTimestamp();
-	}
-
-	public function onPostLoad() {
-		$now = (new DateTime)->getTimestamp();
-		if ( $now > $this->expire ) {
-			$this->logout();
-		}
-		$this->onPostCreate();
-	}
-
-	public function login(User $user) {
-		$this->user = (string) $user;
-	}
-
-	public function logout() {
-		$this->user = null;
-	}
-
-	public function user() {
-		if ( $u = $this->user ) {
-			return new User($u);
-		} else {
-			return false;
-		}
-	}
-
-}
+$set = [
+	'title'			=>	'A new Moka webapp',
+	'description'	=>	'Lorem ipsum dolor sit amet, yeah!',
+	'author'		=>	'Your name <your@email.com>'
+];

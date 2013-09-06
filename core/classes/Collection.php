@@ -41,7 +41,6 @@ abstract class Collection {
 		if ( !$id ) {
 			try {
 				$id = static::create();
-				var_dump($id);
 			} catch ( MongoException $e ) {
 				die("Error creating object in the {$this->collection} collection.\n
 						Error message: {$e}\n");
@@ -53,6 +52,10 @@ abstract class Collection {
 		$this->_objectId = new MongoId($id);
 	}
 
+	public function __toString() {
+		return $this->_objectId;
+	}
+	
 	protected static function create() {
 		$obj = ['_created'	=>	time()];
 		$ret = static::_collection()->insert($obj);

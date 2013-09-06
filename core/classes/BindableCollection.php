@@ -27,6 +27,12 @@
  */
 abstract class BindableCollection extends Collection {
 
+	public function __construct( $id = null ) {
+		$this->onPreLoad();
+		parent::__construct($id);
+		$this->onPostLoad();
+	}
+
 	protected static function create() {
 		static::onPreCreate();
 		$x = parent::create();
@@ -47,6 +53,9 @@ abstract class BindableCollection extends Collection {
 		$this->onPostUpdate($_name, $_value);
 	}
 
+	public function onPreLoad() 	{}
+	public function onPostLoad()	{}
+	
 	public static function onPreCreate() 	{}
 	public static function onPostCreate() 	{}
 

@@ -22,38 +22,9 @@
  */
 
 /**
- * A simple class to manage user sessions on the database
- * Uses the User class to store user data 
+ * Replace the template's custom variables before flushing the page
  */
-class Session extends BindableCollection {
-
-	public function onPostCreate() {
-		$expire = (new DateTime)->modify("+24 hour");
-		$this->expire = $expire->getTimestamp();
-	}
-
-	public function onPostLoad() {
-		$now = (new DateTime)->getTimestamp();
-		if ( $now > $this->expire ) {
-			$this->logout();
-		}
-		$this->onPostCreate();
-	}
-
-	public function login(User $user) {
-		$this->user = (string) $user;
-	}
-
-	public function logout() {
-		$this->user = null;
-	}
-
-	public function user() {
-		if ( $u = $this->user ) {
-			return new User($u);
-		} else {
-			return false;
-		}
-	}
-
+function _template_replace( $input ) {
+	global $set;
+	foreach ( $set as )
 }

@@ -24,9 +24,11 @@
 /*
  * Hello, we are Moka's global objects!
  */
-$db 	= null;
-$cache 	= false;
-$conf 	= [];
+$db 		= null;
+$cache 		= false;
+$conf 		= [];
+$session	= null;
+$me 		= null;
 
 /*
  * Load every file in the directories in $_load, please!
