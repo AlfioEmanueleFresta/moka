@@ -23,5 +23,4 @@
 
 require 'core/core.php';
 
-$c = new Persona;
-$c->delete();
+// TODO: Do stuff.

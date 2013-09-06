@@ -21,7 +21,35 @@
  *
  */
 
-require 'core/core.php';
+abstract class BindableCollection extends Collection {
 
-$c = new Persona;
-$c->delete();
+	protected static function create() {
+		static::onPreCreate();
+		$x = parent::create();
+		static::onPostCreate();
+		return $x;
+	}
+
+	public function delete() {
+		$this->onPreDelete();
+		$x = parent::delete();
+		$this->onPostDelete();
+		return $x;
+	}
+
+	public function __set($_name, $_value) {
+		$this->onPreUpdate($_name, $_value);
+		parent::__set($_name, $_value);
+		$this->onPostUpdate($_name, $_value);
+	}
+
+	public static function onPreCreate() 	{}
+	public static function onPostCreate() 	{}
+
+	public function onPreDelete() 	{}
+	public function onPostDelete() 	{}
+
+	public function onPreUpdate($_name, $_value) 	{}
+	public function onPostUpdate($_name, $_value) 	{}
+
+}

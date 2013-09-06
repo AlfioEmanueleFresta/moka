@@ -40,10 +40,8 @@ abstract class Collection {
 		$this->collection = static::_collection();
 		if ( !$id ) {
 			try {
-				$obj = ['_created'	=>	time()];
-				$ret = $this->collection->insert($obj);
-				$this->_objectId = $obj['_id'];
-				$id = $this->_objectId;
+				$id = static::create();
+				var_dump($id);
 			} catch ( MongoException $e ) {
 				die("Error creating object in the {$this->collection} collection.\n
 						Error message: {$e}\n");
@@ -53,6 +51,12 @@ abstract class Collection {
 			die ("There is no object with id {$id} in the {$this->collection} collection.\n");
 		}
 		$this->_objectId = new MongoId($id);
+	}
+
+	protected static function create() {
+		$obj = ['_created'	=>	time()];
+		$ret = static::_collection()->insert($obj);
+		return $obj['_id'];
 	}
 
 	public static function hasId( $objectId ) {

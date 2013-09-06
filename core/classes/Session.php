@@ -21,7 +21,8 @@
  *
  */
 
-require 'core/core.php';
+class Session extends Collection {
 
-$c = new Persona;
-$c->delete();
+	
+
+}
