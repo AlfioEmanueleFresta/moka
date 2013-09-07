@@ -28,7 +28,7 @@
  * @param string $go Optional. Where to redirect the user. Default is public/home
  * @param string $status Optional. The status to pass to the page. Default is "security"
  */
-function publicPage( $go = 'public/home', $status = "security" ) {
+function publicPage( $go = '/public/home', $status = "security" ) {
 	global $me;
 	if ( $me )
 		redirect($go, $status);
@@ -40,9 +40,9 @@ function publicPage( $go = 'public/home', $status = "security" ) {
  * @param string $go Optional. Where to redirect the user. Default is public/login
  * @param string $status Optional. The status to pass to the page. Default is "security"
  */
-function privatePage( $go = 'public/login', $status = "security" ) {
+function privatePage( $go = '/auth/login', $status = "security" ) {
 	global $me, $page;
-	if ( $me )
-		redirect($go, $status, ['back' => $page]);
+	if ( !$me )
+		redirect($go, $status, ['back' => '/' . $page]);
 }
 

@@ -26,4 +26,4 @@
 <!-- Replace this with your custom home page -->
 
 <h2>This is the home page</h2>
-<p>Welcome and stuff.</p>
+<p>Welcome to your new Moka application.</p>

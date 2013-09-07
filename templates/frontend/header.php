@@ -30,9 +30,8 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -48,15 +47,23 @@
           </ul>
 
 
-          <form class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
+          <div class="navbar-right navbar-btn btn-group">
+            <?php if ( $me ) { ?>
+              <a href="/user/profile" class="btn btn-success">
+                <i class="icon-info-sign"></i>
+                <?php echo $me->email; ?>
+              </a>
+              <a href="/auth/logout" class="btn btn-warning">
+                <i class="icon-signout"></i>
+                Sign out
+              </a>
+            <?php } else { ?>
+              <a href="/auth/login" class="btn btn-success">
+                <i class="icon-signin"></i>
+                Sign in
+              </a>
+            <?php } ?>
+          </div>
 
 
         </div><!--/.navbar-collapse -->

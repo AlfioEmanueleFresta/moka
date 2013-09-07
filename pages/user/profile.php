@@ -21,5 +21,9 @@
  *
  */
 
-$session->logout();
-redirect('/public/home');
+privatePage();
+
+?>
+
+<h3>Welcome, <?php echo $me->email; ?>.</h3>
+<p>This is an example user profile page.</p>

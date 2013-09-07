@@ -20,3 +20,39 @@
  * limitations under the License.
  *
  */
+
+catchStatus(
+	'login_error',
+	STATUS_DANGER,
+	"Invalid credentials",
+	"Please try again."
+);
+
+catchStatus(
+	'empty_fields',
+	STATUS_WARNING,
+	"Empty fields",
+	"Please insertt your email and password."
+);
+
+$payload = getPayload();
+if ( $payload && isset($payload['back']) ) {
+	$back = $payload['back'];
+}
+
+?>
+
+<form class="form-signin" method="POST" action="/auth/login_ok">
+	<h2 class="form-signin-heading">Please sign in</h2>
+	<input name="email" type="email" class="form-control" placeholder="Email address" autofocus required />
+	<input name="password" type="password" class="form-control" placeholder="Password" required />
+
+	<?php if ( isset($back) ) { ?>
+		<input name="back" type="hidden" value="<?= $back; ?>" />
+	<?php } ?>
+
+	<button class="btn btn-lg btn-primary btn-block" type="submit">
+		<i class="icon-signin"></i>
+		Sign in
+	</button>
+</form>

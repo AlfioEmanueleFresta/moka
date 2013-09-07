@@ -21,5 +21,27 @@
  *
  */
 
-$session->logout();
-redirect('/public/home');
+if (empty($_POST['email']) 	|| empty($_POST['password']))
+	redirect("/auth/login", "empty_fields");
+
+$user = User::findOne([
+		'email' => $_POST['email']
+	],
+	['password']
+);
+
+if (!$user)
+	redirect("/auth/login", "login_error");
+
+$password = $user['password'];
+
+if (!checkPassword($_POST['password'], $password))
+	redirect("/auth/login", "login_error");
+
+$session->login(User::object($user));
+
+if ( isset($_POST['back']) ) {
+	redirect($_POST['back'], "just_logged");
+}
+
+redirect('/public/home', "just_logged");
