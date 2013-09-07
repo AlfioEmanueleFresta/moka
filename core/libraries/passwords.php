@@ -21,10 +21,24 @@
  *
  */
 
+/**
+ * Creates a secure hash for the password
+ *
+ * @param string $input The password
+ * @return string The hashed password
+ */
 function hashPassword( $input ) {
-
+	return password_hash($input, PASSWORD_BCRYPT);
 }
 
-function checkPassword( $input, $hash ) {
 
+/**
+ * Check a password against a password hash
+ *
+ * @param string $input The password to try
+ * @param string $hash The hash to verify against
+ * @return bool True for ok, false for go away
+ */
+function checkPassword( $input, $hash ) {
+	return password_verify($input, $hash);
 }

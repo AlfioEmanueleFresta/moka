@@ -68,9 +68,7 @@ if ( !is_readable($file) ) {
 require $file;
 require 'templates/frontend/footer.php';
 
-/*
- * The routing...
- */
+emptyPayload();
 
 /*
  * Finally, go flush everything out
