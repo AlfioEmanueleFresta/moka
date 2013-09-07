@@ -21,6 +21,8 @@
  *
  */
 
+publicPage();
+
 catchStatus(
 	'login_error',
 	STATUS_DANGER,

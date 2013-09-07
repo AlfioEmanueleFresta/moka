@@ -7,4 +7,5 @@ core/configuration/*
 !core/configuration/sample
 
 # All of the uploaded data
-upload/
+upload/files/*
+!upload/files/index.php

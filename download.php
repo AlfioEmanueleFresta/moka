@@ -21,10 +21,20 @@
  *
  */
 
-?>
+require 'core/core.php';
 
-<!-- Replace this with your custom home page -->
+if (!isset($_GET['token']))
+	die('No download token specified.');
 
-<h2>It works! <i class="icon-smile"></i></h2>
-<h3 class="pull-right">... and this is your home page.</h3>
-<p>Welcome to your new Moka application.</p>
+$file = File::fromToken($_GET['token']);
+if (!$file)
+	die('Sorry. The file may no longer exist.')
+
+$count = (int) $file->download;
+$file->download = $cout + 1;
+
+header('Content-Type: ' . $file->mime);
+header("Content-Description: File Transfer");
+header("Content-Disposition: attachment; filename=\"{$file->name}\"");
+
+readfile($file->path);

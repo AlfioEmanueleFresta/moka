@@ -23,8 +23,9 @@
 
 ?>
 
-<!-- Replace this with your custom home page -->
+<form action="/examples/file_upload_1_ok" enctype="multipart/form-data" method="POST">
 
-<h2>It works! <i class="icon-smile"></i></h2>
-<h3 class="pull-right">... and this is your home page.</h3>
-<p>Welcome to your new Moka application.</p>
+	<input name="testFile" type="file" />
+	
+
+</form>
