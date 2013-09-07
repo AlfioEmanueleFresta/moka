@@ -30,6 +30,12 @@ $conf 		= [];
 $session	= null;
 $me 		= null;
 
+
+/*
+ * Set the application timezone
+ */
+date_default_timezone_set('Europe/London');
+
 /*
  * Load every file in the directories in $_load, please!
  */

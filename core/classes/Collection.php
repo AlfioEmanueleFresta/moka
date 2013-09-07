@@ -53,7 +53,7 @@ abstract class Collection {
 	}
 
 	public function __toString() {
-		return $this->_objectId;
+		return (string) $this->_objectId;
 	}
 	
 	protected static function create() {

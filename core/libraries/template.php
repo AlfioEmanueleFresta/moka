@@ -26,5 +26,8 @@
  */
 function _template_replace( $input ) {
 	global $set;
-	foreach ( $set as )
+	foreach ( $set as $key => $value ) {
+		$input = str_replace("[[{$key}]]", $value, $input);
+	}
+	return $input;
 }

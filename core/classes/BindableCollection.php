@@ -36,7 +36,7 @@ abstract class BindableCollection extends Collection {
 	protected static function create() {
 		static::onPreCreate();
 		$x = parent::create();
-		static::onPostCreate();
+		(new static($x))->onPostCreate();
 		return $x;
 	}
 
@@ -57,7 +57,7 @@ abstract class BindableCollection extends Collection {
 	public function onPostLoad()	{}
 	
 	public static function onPreCreate() 	{}
-	public static function onPostCreate() 	{}
+	public function onPostCreate() 	{}
 
 	public function onPreDelete() 	{}
 	public function onPostDelete() 	{}

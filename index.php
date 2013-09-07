@@ -27,7 +27,7 @@ require 'core/core.php';
  * Set caching on...
  */
 ob_start('ob_gzhandler');
-ob_start('_template_set');
+ob_start('_template_replace');
 
 /*
  * Gets the current session from the user cookie
@@ -46,6 +46,35 @@ if ( $user = $session->user() ) {
 /*
  * Load the frontend template...
  */
+require 'templates/frontend/defaults.php';
+require 'templates/frontend/header.php';
 
-{_titolo}
+/*
+ * Routing logic
+ */
+$page = $_SERVER['REQUEST_URI'];
+if ( strpos($page, '?') !== false ) {
+	$page = strstr($page, '?', true);
+}
+$page = explode('/', $page);
+$page = array_diff($page, ['']);
+$page = implode('/', $page);
+if ( !$page ) { $page = 'public/home'; }
+$file = "pages/{$page}.php";
+if ( !is_readable($file) ) {
+	$file = 'pages/error/404.php';
+}
 
+require $file;
+require 'templates/frontend/footer.php';
+
+/*
+ * The routing...
+ */
+
+/*
+ * Finally, go flush everything out
+ */
+ob_end_flush(); 
+header("Content-length: {ob_get_length()}"); 
+ob_end_flush();
