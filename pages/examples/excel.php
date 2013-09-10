@@ -21,20 +21,13 @@
  *
  */
 
-require 'core/core.php';
+$f = new ExcelDocument;
+$f->name = "Excel Document Test.xls";
 
-if (!isset($_GET['token']))
-	die('No download token specified.');
+$f->header(['A', 'B', 'C']);
+for ( $i = 0; $i <= 500; $i++ ) {
+	$f->addRow([ rand(100, 999), rand(100, 999), rand(100, 999) ]);
+}
 
-$file = File::fromToken($_GET['token']);
-if (!$file)
-	die('Sorry. The file may no longer exist.');
-
-$count = (int) $file->download;
-$file->download = $count + 1;
-
-header('Content-Type: ' . $file->mime);
-header("Content-Description: File Transfer");
-header("Content-Disposition: attachment; filename=\"{$file->name}\"");
-
-readfile($file->path);
+$f->save();
+$f->download();

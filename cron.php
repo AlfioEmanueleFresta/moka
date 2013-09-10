@@ -23,4 +23,15 @@
 
 require 'core/core.php';
 
-// TODO: Do stuff.
+/* Expired sessions */
+foreach ( Session::expiredSessions() as $session ) {
+	$session = Session::object($session);
+	$session->delete();
+}
+
+/* Expired files */
+foreach ( File::expiredFiles() as $file ) {
+	$file = Session::object($file);
+	$file->File();
+}
+

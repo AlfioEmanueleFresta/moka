@@ -21,20 +21,22 @@
  *
  */
 
-require 'core/core.php';
+if (empty($_POST['email']) || empty($_POST['password']) || empty($_POST['name']))
+	redirect("/auth/register", "empty_fields");
 
-if (!isset($_GET['token']))
-	die('No download token specified.');
+$user = User::findOne([
+		'email' => $_POST['email']
+	]
+);
 
-$file = File::fromToken($_GET['token']);
-if (!$file)
-	die('Sorry. The file may no longer exist.');
+if ($user)
+	redirect("/auth/register", "already_registered");
 
-$count = (int) $file->download;
-$file->download = $count + 1;
+$user = new User;
+$user->name 	= makeName($_POST['name']);
+$user->email 	= lowerCase($_POST['email']);
+$user->password = hashPassword($_POST['password']);
 
-header('Content-Type: ' . $file->mime);
-header("Content-Description: File Transfer");
-header("Content-Disposition: attachment; filename=\"{$file->name}\"");
+$session->login(User::object($user));
 
-readfile($file->path);
+redirect('/public/home', "just_logged");

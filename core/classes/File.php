@@ -42,6 +42,7 @@ class File extends BindableCollection {
 		$file->name = $theFile['name'];
 		$file->path = $fileName;
 		$file->analyse();
+		$file->expire((new DateTime)->modify("+1 day"));
 		return $file;
 	}
 
@@ -55,7 +56,30 @@ class File extends BindableCollection {
 		$file->name = $theFile['name'];
 		$file->path = $fileName;
 		$file->analyse();
+		$file->expire((new DateTime)->modify("+1 day"));
 		return $file;
+	}
+
+	public function makeEmptyFile() {
+		if ( $this->path ) {
+			$this->unlink();
+		} else {
+			$this->path = static::generateUniqueFileName();
+		}
+		file_put_contents('', $this->path);
+		$this->analyse();
+	}
+
+	public function expire(DateTime $when) {
+		$this->expires = $when->getTimestamp();
+	}
+
+	public static function expiredFiles() {
+		$f = static::find([
+			'expire' => [
+				'$lte' => time()
+			]
+		]);
 	}
 
 	protected static function generateUniqueFileName() {
@@ -88,8 +112,12 @@ class File extends BindableCollection {
 
 	public function onPreDelete() {
 		$this->onPreDeleteFile();
-		@unlink($this->path);
+		$this->unlink();
 		$this->onPostDeleteFile();
+	}
+
+	protected function unlink() {
+		@unlink($this->path);
 	}
 
 	/**
@@ -120,5 +148,3 @@ class File extends BindableCollection {
 	public function onPostDeleteFile()			{}
 
 }
-
-$x = File::upload($_FILES['pene']);

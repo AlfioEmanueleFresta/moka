@@ -24,17 +24,17 @@
 publicPage();
 
 catchStatus(
-	'login_error',
+	'already_registered',
 	STATUS_DANGER,
-	"Invalid credentials",
-	"Please try again."
+	"You are already registered",
+	"Please login instead."
 );
 
 catchStatus(
 	'empty_fields',
 	STATUS_WARNING,
 	"Empty fields",
-	"Please insert your email and password."
+	"Please fill everything!"
 );
 
 $payload = getPayload();
@@ -44,20 +44,14 @@ if ( $payload && isset($payload['back']) ) {
 
 ?>
 
-<form class="form-signin" method="POST" action="/auth/login_ok">
-	<h2 class="form-signin-heading">Please sign in</h2>
-	<input name="email" type="email" class="form-control" placeholder="Email address" autofocus required />
-	<input name="password" type="password" class="form-control" placeholder="Password" required />
+<form class="form-signin" method="POST" action="/auth/register_ok">
+	<h2 class="form-signin-heading">Register</h2>
+	<input name="name" type="text" class="form-control" placeholder="Full name" required autocomplete="off" />
+	<input name="email" type="email" class="form-control" placeholder="Email address" autofocus required autocomplete="off" />
+	<input name="password" type="password" class="form-control" placeholder="Password" required autocomplete="off" />
 
-	<?php if ( isset($back) ) { ?>
-		<input name="back" type="hidden" value="<?= $back; ?>" />
-	<?php } ?>
-
-	<button class="btn btn-lg btn-primary btn-block" type="submit">
-		<i class="icon-signin"></i>
-		Sign in
+	<button class="btn btn-lg btn-warning btn-block" type="submit">
+		<i class="icon-asterisk"></i>
+		Register
 	</button>
-	<a class="btn btn-warning btn-block" href="/auth/register">
-		Not yet registered?
-	</a>
 </form>

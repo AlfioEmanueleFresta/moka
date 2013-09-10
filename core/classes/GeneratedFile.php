@@ -21,48 +21,12 @@
  *
  */
 
-/**
- * A simple class to manage user sessions on the database
- * Uses the User class to store user data 
- */
-class Session extends BindableCollection {
+abstract class GeneratedFile extends File {
 
-	public static function expiredSessions() {
-		return static::find([
-			'expire'	=>
-				[
-					'$lte'	=>	time()
-				]
-		]);
-	}
-	
 	public function onPostCreate() {
-		$expire = (new DateTime)->modify("+24 hour");
-		$this->expire = $expire->getTimestamp();
+		$this->makeEmptyFile();
 	}
 
-	public function onPostLoad() {
-		$now = (new DateTime)->getTimestamp();
-		if ( $now > $this->expire ) {
-			$this->logout();
-		}
-		$this->onPostCreate();
-	}
-
-	public function login(User $user) {
-		$this->user = (string) $user;
-	}
-
-	public function logout() {
-		$this->user = null;
-	}
-
-	public function user() {
-		if ( $u = $this->user ) {
-			return new User($u);
-		} else {
-			return false;
-		}
-	}
+	abstract public function save();
 
 }
