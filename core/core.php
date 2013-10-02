@@ -92,20 +92,3 @@ try {
 	die("An error has occured while trying to connect to the Mongo database.\nError: {$e->getMessage()}\n");
 }
 
-/*
- * Connects to the cache server, if needed
- */
-if ( isset($conf['memcached']) ) {
-	try {
-		$cache = new Memcached();
-		// Add the configured servers...
-		foreach ( $conf['memcached']['servers'] as $_cacheServer ) {
-			$cache->addServer(
-				$_cacheServer['host'],
-				$_cacheServer['port']
-			);
-		}
-	} catch ( Exception $e ) {
-		die("Error connecting to the cache server: {$e->message}\n");
-	}
-}
