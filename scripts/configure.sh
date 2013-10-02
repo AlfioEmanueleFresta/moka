@@ -8,14 +8,14 @@ echo "This script will help you configure your installation"
 # Database name
 echo "DATABASE: Your database name [default: test]"
 read dbname
-if [[ $dbname = '' ]];then
+if [[ "$dbname" = '' ]];then
 	dbname = 'test'
 fi
 
 # Email host
 echo "EMAIL: SMTP Host [default: localhost]"
 read smtphost
-if [[ $smtphost = '' ]];then
+if [[ "$smtphost" = '' ]];then
 	smtphost = 'localhost'
 fi
 
