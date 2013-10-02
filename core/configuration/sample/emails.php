@@ -24,10 +24,10 @@
 $conf['emails'] = [
 
 	/* SMTP Server Configuration */
-	'host'		=>	'localhost',
+	'host'		=>	'SMTP_HOST',
 	'port'		=>	25,
-	'auth'		=>	true,
-	'username'	=>	'',
-	'password'	=>	''
+	'auth'		=>	false,
+	'username'	=>	'SMTP_USERNAME',
+	'password'	=>	'SMTP_PASSWORD'
 
 ];

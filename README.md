@@ -4,9 +4,13 @@ Moka is a personal project for a simple and modern PHP framework.
 
 ## Getting started
 
-### Project init
-### Project build
-### Project install
+### Install your Moka clone
+```bash
+git clone https://github.com/AlfioEmanueleFresta/moka.git
+cd moka/
+sh scripts/install-deps.sh
+sh scripts/configure.sh
+```
 
 ## Documentation
 

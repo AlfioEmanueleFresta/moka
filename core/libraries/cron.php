@@ -21,12 +21,15 @@
  *
  */
 
-$conf['database'] = [
-	
-	'connection'	=>	'mongodb://localhost:27017',
-	'database'		=>	'DBNAME',
-	'options'		=>	[
-		'connect'	=>	true
-	]
+/**
+ * The cron stacks
+ */
+define('CRON_STACK_HOURLY',		10);
+define('CRON_STACK_DAILY',		20);
+define('CRON_STACK_WEEKLY',		30);
+define('CRON_STACK_MONTHLY',	40);
 
-];
+/**
+ * The stack!
+ */
+$_cron_stack = [];
