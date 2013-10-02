@@ -89,7 +89,7 @@ try {
 	);
 	$db = $db->selectDB($conf['database']['database']);
 } catch ( Exception $e ) {
-	die("An error has occured while trying to connect to the Mongo database.\nError: {$e->message}\n");
+	die("An error has occured while trying to connect to the Mongo database.\nError: {$e->getMessage()}\n");
 }
 
 /*
