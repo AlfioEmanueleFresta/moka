@@ -33,8 +33,17 @@ ob_start('_template_replace');
  * Gets the current session from the user cookie
  * and persists it creating a new one!
  */
-$session = new Session(@$_COOKIE['sid']);
-setcookie('sid', (string) $session);
+ 
+if ($_COOKIE['sid'])
+{
+	$session = new Session(@$_COOKIE['sid']);
+	setcookie('sid', (string) $session);
+}
+else
+{
+	$session = new Session();
+	setcookie('sid', (string) $session);	
+}
 
 /*
  * Now set the $me global variable, if I'm in!
