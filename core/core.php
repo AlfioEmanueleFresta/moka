@@ -80,6 +80,14 @@ foreach ( $whatsNeeded as $needed ) {
 }
 
 /*
+ * Load external libraries
+ * - Smarty
+ * - DOMPDF
+ */
+require('core/libraries/external/smarty/Smarty.class.php');
+require('core/libraries/external/dompdf/dompdf.php');
+
+/*
  * You, Moka, go connect to the database! 
  */
 try {

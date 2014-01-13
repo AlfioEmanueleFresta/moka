@@ -24,8 +24,7 @@
 /*
  * Constants 
  */
-define('STATUS_OK',	null);
-
+define('STATUS_OK',			null);
 define('STATUS_WARNING',	'warning');
 define('STATUS_DANGER',		'danger');
 define('STATUS_SUCCESS',	'success');
@@ -44,10 +43,21 @@ function redirect ( $page, $status = STATUS_OK, $payload = [] ) {
 		$session->status = $status;
 	if ($payload)
 		$session->payload = $payload;
-	header("Location: {$page}");
+	$interface = getInterface();
+	$interface = getInterfacePath($interface);
+	header("Location: {$interface}/{$page}");
 	exit(0);
 } 
 
+/**
+ * Gets the current interface name
+ */
+function getInterface( $request_uri = null ) {
+	if ( !$request_uri )
+		$request_uri = $_SERVER['REQUEST_URI'];
+
+
+}
 /**
  * Empty the payload at the end of the page
  */
