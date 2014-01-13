@@ -5,7 +5,6 @@
  * This is MOKA, a simple and modern PHP framework
  * Copyright 2014, the authors:
  * - Alfio Emanuele Fresta 	<alfio.emanuele.f@gmail.com>
- * - Angelo Lupo			<angelolupo94@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +26,16 @@
 class View {
 
 	private
-		$_template;
+		$_template = null,
+		$_renderer = null;
+
+	public 
+		$data = null;
 
 	public function __construct( $request_uri = null ) {
 		$this->_template = findTemplateFile($request_uri);
+		$this->data      = new stdClass;
+		$this->renderer  = new TemplateEngine;
 	}
 
 	/**
@@ -61,6 +66,7 @@ class View {
 	public function render() {
 		if ( !$this->_template )
 			throw new Exception("There is no template for the page");
+		$this->_renderer->data = (array) $this->data;
 		$this->renderHeader();
 		$this->renderTemplate();
 		$this->renderFooter();
@@ -98,7 +104,7 @@ class View {
 	 * Render the file
 	 */
 	private function renderFile($fileName) {
-
+		$this->_renderer->renderFile($fileName);
 	}
 
 }

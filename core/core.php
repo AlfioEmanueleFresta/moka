@@ -3,9 +3,8 @@
 /*
  *
  * This is MOKA, a simple and modern PHP framework
- * Copyright 2013, the authors:
+ * Copyright 2014, the authors:
  * - Alfio Emanuele Fresta 	<alfio.emanuele.f@gmail.com>
- * - Angelo Lupo			<angelolupo94@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
