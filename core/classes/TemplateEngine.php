@@ -26,13 +26,11 @@
 class TemplateEngine extends Smarty {
 
 	public function __construct() {
-
 		parent::__construct();
+		$this->caching = 0;
 		$this->setTemplateDir(".");
-		$this->setCompileDir("./upload/temp");
+		$this->setCompileDir("./core/data/temp");
 		$this->setConfigDir("./core/configuration");
-		$this->setCacheDir("./upload/temp");
-
 	}
 
 	public function setData($data) {

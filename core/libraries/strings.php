@@ -59,3 +59,9 @@ function makeTitle( $input, $trimmed = true ) {
 	return ucfirst($input);
 }
 
+/**
+ * Strips an eventual starting slash
+ */
+function stripSlash( $string ) {
+	return strip($string, '/');
+}

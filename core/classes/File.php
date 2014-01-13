@@ -88,7 +88,7 @@ class File extends BindableCollection {
 		).md5(
 			( microtime(true) + rand(1, 40) )
 		);
-		return "./upload/files/{$randomHash}";
+		return "./core/data/files/{$randomHash}";
 	}
 
 	protected static function generateUniqueToken() {

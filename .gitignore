@@ -7,5 +7,9 @@ core/configuration/*
 !core/configuration/sample
 
 # All of the uploaded data
-upload/files/*
-!upload/files/index.php
+core/data/files/*
+!core/data/files/index.php
+
+# All of the temporary data
+core/data/temp/*
+!core/data/temp/index.php

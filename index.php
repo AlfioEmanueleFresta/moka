@@ -29,53 +29,29 @@ require 'core/core.php';
 ob_start('ob_gzhandler');
 ob_start('_template_replace');
 
-/*
- * Gets the current session from the user cookie
- * and persists it creating a new one!
- */
- 
-if ($_COOKIE['sid'])
-{
-	$session = new Session(@$_COOKIE['sid']);
-	setcookie('sid', (string) $session);
-}
-else
-{
-	$session = new Session();
-	setcookie('sid', (string) $session);	
-}
-
-/*
- * Now set the $me global variable, if I'm in!
- */
-if ( $user = $session->user() ) {
-	$me = $user;
-}
-
-/*
- * Load the frontend template...
- */
-require 'templates/frontend/defaults.php';
-require 'templates/frontend/header.php';
-
-/*
+/* 
  * Routing logic
  */
-$page = $_SERVER['REQUEST_URI'];
-if ( strpos($page, '?') !== false ) {
-	$page = strstr($page, '?', true);
-}
-$page = explode('/', $page);
-$page = array_diff($page, ['']);
-$page = implode('/', $page);
-if ( !$page ) { $page = 'public/home'; }
-$file = "pages/{$page}.php";
-if ( !is_readable($file) ) {
-	$file = 'pages/error/404.php';
+$pages 				= requestMaps();
+$controllerFile		= findControllerFile();
+$controllerName		= findControllerName();
+$viewForce 			= null;
+$interface      = guessCurrentInterfaceName();
+if ( !$controller ) {
+	// 404
+	$controllerFile = "./core/classes/Controller404.php";
+	$controllerName = "Controller404";
+	$viewForce 		= "./core/templates/{$interface}/_404.php";
 }
 
-require $file;
-require 'templates/frontend/footer.php';
+echo "{$controllerFile}, {$controllerName}.";
+
+require $controllerFile;
+$controller = new $controllerName;
+$controller->assignSession(@$_COOKIE['sid']);
+$controller->interface = $interface;
+$controller->view = new View;
+$controller->respond();
 
 emptyPayload();
 

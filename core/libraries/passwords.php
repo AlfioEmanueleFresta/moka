@@ -24,11 +24,12 @@
 /**
  * Creates a secure hash for the password
  *
- * @param string $input The password
+ * @param string $input The password in plain text.
+ * @param int    $cost 	Optional. The hash cost.
  * @return string The hashed password
  */
-function hashPassword( $input ) {
-	return password_hash($input, PASSWORD_BCRYPT);
+function hashPassword( $input, $cost = 11 ) {
+	return password_hash($input, PASSWORD_BCRYPT, ['cost' => $cost ]);
 }
 
 

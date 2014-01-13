@@ -71,19 +71,22 @@ function findControllerFile( $request_uri = null ) {
  * Finds controller name for a request or return false
  *
  * @param 	string  			$request_uri 	Optional. The request URI. Default to server.
- * @return 	string|bool(false)					The file path or false on failure.
+ * @return 	string|bool(false)					The controller name or false on failure.
  */
-function findControllerFile( $request_uri = null ) {
-	$possible = requestMaps($request_uri);
-	foreach ( $possible as $try ) {
-		$file = "./core/controllers/{$try}.php";
-		if ( is_readable($file) )
-			return $file;
-		$file = "./core/controllers/frontend/{$try}.php";
-		if ( is_readable($file) )
-			return $file;
+function findControllerName( $request_uri = null ) {
+	$file = findControllerFile($request_uri);
+	if ( !$file )
+		return false;
+	// Remove unnecessary parts
+	$file = str_replace('./core/controllers/', 	'', $file);
+	$file = str_replace('.php',					'', $file);
+	$file = str_replace('_',					'/', $file);
+	// Explode!
+	$file = explode('/', $file);
+	foreach ( $file as &$part ) {
+		$part = makeTitle($part);
 	}
-	return false;
+	return implode('_', $part);
 } 
 
 /**
@@ -105,3 +108,13 @@ function findTemplateFile( $request_uri = null ) {
 	return false;
 } 
 
+/**
+ * Try and guess a interface name
+ */
+function guessCurrentInterfaceName( $request_uri = null ) {
+	$from = requestMaps($request_uri);
+	$from = explode('/', $from[0]);
+	if ( is_dir("./core/controllers/{$from}") )
+		return $from;
+	return 'frontend';
+}
